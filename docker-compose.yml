@@ -1,0 +1,30 @@
+version: '3'
+services:
+  app:
+    build:
+      context: ./app
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    networks:
+      - mi-red
+    depends_on:
+      - db
+
+  db:
+    build:
+      context: ./db
+      dockerfile: Dockerfile
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: mi_base_de_datos
+      MYSQL_USER: usuario
+      MYSQL_PASSWORD: contraseña
+    ports:
+      - "3306:3306"
+    networks:
+      - mi-red
+
+networks:
+  mi-red:
+    driver: bridge
